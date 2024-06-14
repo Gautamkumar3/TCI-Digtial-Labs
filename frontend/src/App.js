@@ -1,9 +1,10 @@
 import "./App.css";
+import Dashboard from "./Dashboard";
 
 function App() {
   return (
     <div className="App">
-      <h1>welcome to react app</h1>
+      <Dashboard />
     </div>
   );
 }
