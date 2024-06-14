@@ -1,61 +1,60 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Button, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { getTodosData } from "../store/dashboard/dashboard.actions";
 import { useDispatch, useSelector } from "react-redux";
-import { ArrowForwardIcon, DeleteIcon } from "@chakra-ui/icons";
+import { ArrowForwardIcon, DeleteIcon, AddIcon } from "@chakra-ui/icons";
 import StatusComponent from "./Component/StatusComponent";
+import GroupComponent from "./Component/GroupComponent";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
   const { todoData, groups } = useSelector((store) => store.todoReducer);
+  const [toogleStatus, setToogleStatus] = useState(false);
+
   useEffect(() => {
     dispatch(getTodosData());
   }, []);
 
   return (
-    <Box>
-      {groups?.map((el, index) => (
-        <Box key={index} display={"flex"} width={"fit-content"} height="40px">
-          <Box p={"5px 8px"}>
-            <DeleteIcon />
-          </Box>
-          <Box border={"1px solid gray"} p={"5px"} background={"#eee"}>
-            Group {index + 1}
-          </Box>
-          <Box
-            borderY={"1px solid gray"}
-            textAlign={"center"}
-            minW={"50px"}
-            p={"5px 8px"}
-          >
-            {el[index]["id"]}
-          </Box>
-          <Box
-            border={"1px solid gray"}
-            textAlign={"center"}
-            minW={"40px"}
-            p={"5px 8px"}
-          >
-            <ArrowForwardIcon color={"#22A7F0"} />
-          </Box>
-
-          <Box
-            w="40px"
-            bg="#eee"
-            p={"5px 8px"}
-            borderY="1px solid gray"
-            borderRight={"1px solid gray"}
-          >
-            {el[el.length - 1]["id"]}
-          </Box>
+    <>
+      <Box
+        display={"flex"}
+        alignItems={"center"}
+        width={"95%"}
+        justifyContent={"center"}
+        gap={"3rem"}
+      >
+        <Box>
+          {groups?.map((el, index) => (
+            <GroupComponent key={index} group={el} index={index} />
+          ))}
         </Box>
-      ))}
-      <Box>
-        {groups?.map((group) => (
-          <StatusComponent data={group} />
-        ))}
+        {toogleStatus && (
+          <Box width={"60%"}>
+            {groups?.map((group) => (
+              <StatusComponent data={group} />
+            ))}
+          </Box>
+        )}
       </Box>
-    </Box>
+
+      <Box m={"2rem"}>
+        <Button
+          m={5}
+          leftIcon={<AddIcon />}
+          colorScheme="blue"
+          variant="outline"
+        >
+          Add Group
+        </Button>
+        <Button
+          onClick={() => setToogleStatus(!toogleStatus)}
+          colorScheme="blue"
+        >
+          {toogleStatus ? "Hide Status" : "Show Status"}
+        </Button>
+      </Box>
+    </>
   );
 };
 
