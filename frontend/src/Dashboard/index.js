@@ -31,13 +31,13 @@ const Dashboard = () => {
   }
 
   function handleAddGroup(onClose) {
+    console.log(groups);
     if (groups.length == 0) {
       let tempGroup = todoData.slice(start - 1, end);
       dispatch(addGroup([tempGroup]));
       onClose();
       return;
-    }
-    if (groups.length == 1) {
+    } else if (groups.length == 1) {
       let group = groups[0];
       if (group[0]["id"] == 1 && group[group.length - 1]["id"] == 10) {
         if (baseConditionCheck(start, end)) {
@@ -51,20 +51,19 @@ const Dashboard = () => {
             return alert("It is your first group so it must start from 1");
           }
         }
+      } else {
+        let group = groups[groups.length - 1];
+        group = group[group.length - 1];
+        console.log(group["id"], start, "start");
+        if (group["id"] == start - 1 && baseConditionCheck(start, end)) {
+          let tempGroup = todoData.slice(start - 1, end);
+          dispatch(addGroup([...groups, tempGroup]));
+          setStart("");
+          setEnd("");
+        } else {
+          return alert("This is not a valid group");
+        }
       }
-      // else {
-      //   let group = groups[groups.length - 1];
-      //   group = group[group.length - 1];
-      //   console.log(group["id"], start, "start");
-      //   if (group["id"] == start - 1 && baseConditionCheck(start, end)) {
-      //     let tempGroup = todoData.slice(start - 1, end);
-      //     dispatch(addGroup([...groups, tempGroup]));
-      //     setStart("");
-      //     setEnd("");
-      //   } else {
-      //     return alert("This is not a valid group");
-      //   }
-      // }
     } else {
       let group = groups[groups.length - 1];
       group = group[group.length - 1];
