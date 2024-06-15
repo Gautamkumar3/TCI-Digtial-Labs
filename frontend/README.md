@@ -2,7 +2,7 @@ To-Do List Completion Status App
 
 This React JS app allows users to view the completion status of their to-do list items by grouping them into smaller groups. The app fetches the status of each item from an API and displays it next to the corresponding group.
 
-Deployed link - `https://tcidigitallabs-g2gautamsinghgmailcoms-projects.vercel.app/`
+[Deployed link](`https://tcidigitallabs-g2gautamsinghgmailcoms-projects.vercel.app/`)
 
 ## Features
 
@@ -11,7 +11,7 @@ Deployed link - `https://tcidigitallabs-g2gautamsinghgmailcoms-projects.vercel.a
 - Validate groups based on specific rules.
 - Fetch and display the completion status of each to-do item from an API.
 - Manage state using Redux.
-- Show button only visible when last group is 10.
+- Show Status button only visible when last group is 10.
 
 ## API Integration
 
