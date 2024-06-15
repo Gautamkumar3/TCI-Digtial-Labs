@@ -2,7 +2,6 @@ import { Box, Text } from "@chakra-ui/react";
 import React from "react";
 
 const StatusComponent = ({ data = [] }) => {
-  console.log(data);
   return (
     <Box
       display={"flex"}
@@ -14,7 +13,7 @@ const StatusComponent = ({ data = [] }) => {
       my={2}
     >
       {data?.map((item, i) => (
-        <Text key={item.id}>{` (${item.id}) ${item.completed} ${
+        <Text key={i}>{` (${item.id}) ${item.completed} ${
           data.length == i + 1 ? "" : ","
         }  `}</Text>
       ))}

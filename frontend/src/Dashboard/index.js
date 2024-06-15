@@ -14,6 +14,11 @@ const Dashboard = () => {
   const [toogleStatus, setToogleStatus] = useState(false);
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
+  let lastGroup = groups[groups.length - 1];
+  let isLastGroup10;
+  if (lastGroup) {
+    isLastGroup10 = lastGroup[lastGroup.length - 1]["id"];
+  }
 
   function baseConditionCheck(start, end) {
     if (start <= 0 || end > 10) {
@@ -114,7 +119,7 @@ const Dashboard = () => {
             />
           ))}
         </Box>
-        {toogleStatus && (
+        {isLastGroup10 == 10 && toogleStatus && (
           <Box width={"60%"}>
             {groups?.map((group) => (
               <StatusComponent data={group} />
@@ -132,8 +137,9 @@ const Dashboard = () => {
         <Button
           onClick={() => setToogleStatus(!toogleStatus)}
           colorScheme="blue"
+          isDisabled={isLastGroup10 != 10}
         >
-          {toogleStatus ? "Hide Status" : "Show Status"}
+          {isLastGroup10 == 10 && toogleStatus ? "Hide Status" : "Show Status"}
         </Button>
       </Box>
     </>
