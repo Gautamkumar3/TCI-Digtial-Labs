@@ -2,7 +2,7 @@ import React from "react";
 import { ArrowForwardIcon, DeleteIcon } from "@chakra-ui/icons";
 import { Box } from "@chakra-ui/react";
 
-function GroupComponent({ group, index }) {
+function GroupComponent({ group, index, handleDelete }) {
   return (
     <Box
       key={index}
@@ -12,7 +12,11 @@ function GroupComponent({ group, index }) {
       my={2}
     >
       <Box p={"5px 8px"}>
-        <DeleteIcon color={"#22A7F0"} cursor={"pointer"} />
+        <DeleteIcon
+          color={"#22A7F0"}
+          cursor={"pointer"}
+          onClick={() => handleDelete(index)}
+        />
       </Box>
       <Box border={"1px solid gray"} p={"5px"} background={"#eee"}>
         Group {index + 1}

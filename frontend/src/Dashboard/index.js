@@ -8,7 +8,9 @@ import AddGroupModal from "./Component/AddGroupModal";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const { todoData, groups } = useSelector((store) => store.todoReducer);
+  const { todoData, groups, loading } = useSelector(
+    (store) => store.todoReducer
+  );
   const [toogleStatus, setToogleStatus] = useState(false);
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
@@ -29,6 +31,12 @@ const Dashboard = () => {
   }
 
   function handleAddGroup(onClose) {
+    if (groups.length == 0) {
+      let tempGroup = todoData.slice(start - 1, end);
+      dispatch(addGroup([tempGroup]));
+      onClose();
+      return;
+    }
     if (groups.length == 1) {
       let group = groups[0];
       if (group[0]["id"] == 1 && group[group.length - 1]["id"] == 10) {
@@ -43,37 +51,50 @@ const Dashboard = () => {
             return alert("It is your first group so it must start from 1");
           }
         }
-      } else {
-        let group = groups[groups.length - 1];
-        group = group[group.length - 1];
-        console.log(group["id"], start, "start");
-        if (group["id"] < start && baseConditionCheck(start, end)) {
-          let tempGroup = todoData.slice(start - 1, end);
-          dispatch(addGroup([...groups, tempGroup]));
-          setStart("");
-          setEnd("");
-        } else {
-          return alert("This is not a valid group");
-        }
       }
+      // else {
+      //   let group = groups[groups.length - 1];
+      //   group = group[group.length - 1];
+      //   console.log(group["id"], start, "start");
+      //   if (group["id"] == start - 1 && baseConditionCheck(start, end)) {
+      //     let tempGroup = todoData.slice(start - 1, end);
+      //     dispatch(addGroup([...groups, tempGroup]));
+      //     setStart("");
+      //     setEnd("");
+      //   } else {
+      //     return alert("This is not a valid group");
+      //   }
+      // }
     } else {
       let group = groups[groups.length - 1];
       group = group[group.length - 1];
       console.log(group["id"], start, "start");
-      if (group["id"] < start && baseConditionCheck(start, end)) {
+      if (group["id"] == start - 1 && baseConditionCheck(start, end)) {
         let tempGroup = todoData.slice(start - 1, end);
         dispatch(addGroup([...groups, tempGroup]));
         setStart("");
         setEnd("");
+      } else {
+        return alert("This is not a valid group");
       }
     }
     console.log(start, end);
     onClose();
   }
 
+  function handleDelete(id) {
+    let updatedGroup = groups.filter((el, index) => index !== id);
+    dispatch(addGroup(updatedGroup));
+    console.log(updatedGroup, "updatedGroup", id);
+  }
+
   useEffect(() => {
     dispatch(getTodosData());
   }, [dispatch]);
+
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
 
   return (
     <>
@@ -86,7 +107,12 @@ const Dashboard = () => {
       >
         <Box>
           {groups?.map((el, index) => (
-            <GroupComponent key={index} group={el} index={index} />
+            <GroupComponent
+              key={index}
+              group={el}
+              index={index}
+              handleDelete={handleDelete}
+            />
           ))}
         </Box>
         {toogleStatus && (
