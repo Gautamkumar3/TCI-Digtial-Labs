@@ -2,28 +2,14 @@ import {
   GET_TODOS_ERROR,
   GET_TODOS_LOADING,
   GET_TODOS_SUCCESS,
+  MANAGE_GROUPS,
 } from "./dashboard.type";
 
 const initData = {
   loading: false,
   error: false,
   todoData: [],
-  groups: [
-    [
-      {
-        userId: 1,
-        id: 13,
-        title: "et doloremque nulla",
-        completed: false,
-      },
-      {
-        userId: 1,
-        id: 14,
-        title: "repellendus sunt dolores architecto voluptatum",
-        completed: true,
-      },
-    ],
-  ],
+  groups: [],
 };
 
 export const todoReducer = (state = initData, { type, payload }) => {
@@ -37,8 +23,13 @@ export const todoReducer = (state = initData, { type, payload }) => {
         ...state,
         loading: false,
         error: true,
-        todoData: payload,
-        groups: [...state.groups, payload],
+        todoData: payload || [],
+        groups: [payload],
+      };
+    case MANAGE_GROUPS:
+      return {
+        ...state,
+        groups: payload,
       };
     default:
       return {

@@ -23,7 +23,7 @@ function GroupComponent({ group, index }) {
         minW={"50px"}
         p={"5px 8px"}
       >
-        {group[index]["id"]}
+        {group[0]["id"]}
       </Box>
       <Box
         border={"1px solid gray"}

@@ -2,6 +2,7 @@ import {
   GET_TODOS_ERROR,
   GET_TODOS_LOADING,
   GET_TODOS_SUCCESS,
+  MANAGE_GROUPS,
 } from "./dashboard.type";
 import axios from "axios";
 
@@ -19,3 +20,8 @@ export const getTodosData = () => async (dispatch) => {
     return dispatch({ type: GET_TODOS_ERROR });
   }
 };
+
+export const addGroup = (groups) => ({
+  type: MANAGE_GROUPS,
+  payload: groups,
+});
