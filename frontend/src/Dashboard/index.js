@@ -26,10 +26,8 @@ const Dashboard = () => {
         "This is not a valid group. 'From' must be greater than 0 and 'To' must be less than or equal to 10."
       );
       return false;
-    } else if (start > end) {
-      alert(
-        "This is not a valid group. 'From' must be less than or equal to 'To'."
-      );
+    } else if (start >= end) {
+      alert("This is not a valid group. 'From' must be less than  'To'.");
       return false;
     }
     return true;
